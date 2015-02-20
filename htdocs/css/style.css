@@ -1,0 +1,27 @@
+#content{
+    width: 500px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px;
+    border-radius: 2px;
+    border-style: solid;
+}
+
+#menu{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.error{
+    color: red;
+}
+
+a{
+    text-decoration: none;
+}
+
+a:hover{
+    color: orange;
+    background-color: lightskyblue;
+}
