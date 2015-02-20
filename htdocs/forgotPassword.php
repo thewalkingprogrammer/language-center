@@ -6,18 +6,20 @@ include ('includes/header.php');
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     $random = substr(str_shuffle($chars), 0, 10);
-    $query = "update users set pass ='" . $random . "' where email='" . $_POST['email'] . "' and userId =" . $_POST['userId'];
+    $query = "update users "
+            . "set pass = '" . $random . "' "
+            . "where email = '" . $_POST['email'] . "'";
     $result = mysqli_query($con, $query) or trigger_error("Wrong query");
-    
+
     if (mysqli_affected_rows($con) == 1) {
         try {
             mail($_POST['email'], 'New Password', $random);
-            echo 'Password updated, check email.';
+            echo '<div class="alert alert-success" role="alert">Password updated, check email.</div>';
         } catch (Exception $ex) {
-            echo 'Error sending email.';
+            echo '<div class="alert alert-danger" role="alert">Error sending email.</div>';
         }
-    }else{
-        echo '<p class="error">Wrong!';
+    } else {
+        echo '<div class="alert alert-danger" role="alert">Wrong!</div>';
     }
 }
 ?>
@@ -37,10 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                             <td><input type="text" class="form-control" placeholder="Email: " name="email"/></td>
                         </tr>
 
-                        <tr>
-                            <td>ID:</td>
-                            <td><input type="text" class="form-control" placeholder="User ID: " name="userId"/></td>
-                        </tr>
                         <tr>
                             <td><input type="submit" class="btn btn-success" value="Send new password"></td>
                         </tr>

@@ -11,68 +11,68 @@ if ($_SESSION['level'] == 1) {
             $fName = mysqli_real_escape_string($con, $_POST['firstName']);
         } else {
             $fName = false;
-            echo '<p class="error">First name is required</p>';
+            echo '<div class="alert alert-danger" role="alert">First name is required</div>';
         }
 
         if (!empty($_POST['lastName'])) {
             $lName = mysqli_real_escape_string($con, $_POST['lastName']);
         } else {
             $lName = false;
-            echo '<p class="error">Last name is required</p>';
+            echo '<div class="alert alert-danger" role="alert">Last name is required</div>';
         }
 
         if (!empty($_POST['email'])) {
             $email = mysqli_real_escape_string($con, $_POST['email']);
         } else {
             $email = false;
-            echo '<p class="error">Email is required</p>';
+            echo '<div class="alert alert-danger" role="alert">Email is required</div>';
         }
 
         if (!empty($_POST['password1'])) {
             $password = mysqli_real_escape_string($con, $_POST['password1']);
         } else {
             $password = false;
-            echo '<p class="error">Password is required</p>';
+            echo '<div class="alert alert-danger" role="alert">Password is required</div>';
         }
 
         if ($fName && $lName && $email && $password) {
 
-            $query = "select userId from users where email='$email'";
+            $query = "select userId "
+                    . "from users "
+                    . "where email = '$email'";
             $result = mysqli_query($con, $query) or trigger_error('Query is wrong!');
 
             if (mysqli_num_rows($result) == 0) {
-                $query = "insert into users (fName, lName, email, pass)"
-                        . " values('$fName', '$lName', '$email', '$password')";
+                $query = "insert into users (fName, lName, email, pass) "
+                        . "values('$fName', '$lName', '$email', '$password')";
                 $result = mysqli_query($con, $query) or trigger_error('Query is wrong!');
 
                 if (mysqli_affected_rows($con) == 1) {
-                    echo '<h3>Thank you for registering, you can now login.</h3>';
                     header("Location: viewUsers.php?msg3=You succesfully added a new user.");
                     exit();
                 } else {
-                    echo '<p class="error">Something went wrong, try again.</p>';
+                    echo '<div class="alert alert-danger" role="alert">Something went wrong, try again.</div>';
                 }
             } else {
-                echo '<p class="error">Email already exists.</p>';
+                echo '<div class="alert alert-danger" role="alert">Email already exists.</div>';
             }
         } else {
-            echo '<p class="error">Something is not right.</p>';
+            echo '<div class="alert alert-danger" role="alert">Something is not right.</div>';
         }
-        mysqli_close($con);
     }
 } else {
     header("Location: index.php");
 }
 ?>
 
-<form name="frmAddUser" action="addUser.php" method="post" onsubmit="validateAddUser()">
+<form name="frmAddUser" action="addUser.php" method="post" onsubmit="return validateAddUser()">
     <fieldset>
         <div id="contentCentered">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Add User</h3>
                 </div>
-                
+
                 <div class="panel-body">
                     <table>
                         <tr>
@@ -115,7 +115,7 @@ if ($_SESSION['level'] == 1) {
 
                         <tr>
                             <td></td>
-                            <td><input type="submit" class="btn btn-success" value="Register" /></td>
+                            <td><input type="submit" class="btn btn-success" value="Add User" /></td>
                         </tr>
                     </table>
                 </div>

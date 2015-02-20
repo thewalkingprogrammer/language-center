@@ -1,23 +1,24 @@
 <?php
-    require '../connection.php';
-    include 'includes/header.php';
-    
-    if($_SESSION['level'] == 0){
-        if($_SERVER['REQUEST_METHOD'] == "POST"){
-            $query = "insert into requests (langRequest, reason)"
-                        . " values('" . $_POST['langRequest'] . "', '" . $_POST['reason'] . "')";
-            $result = mysqli_query($con, $query) or trigger_error('Query is wrong!');
+require '../connection.php';
+include 'includes/header.php';
 
-            if (mysqli_affected_rows($con) == 1) {
-                header("Location: index.php?msg=Request send successfully!");
-                exit();
-            } else {
-                echo '<p class="error">Something went wrong, try again.</p>';
-            }
+if ($_SESSION['level'] == 0) {
+
+    if ($_SERVER['REQUEST_METHOD'] == "POST") {
+        $query = "insert into requests (langRequest, reason)"
+                . " values('" . $_POST['langRequest'] . "', '" . $_POST['reason'] . "')";
+        $result = mysqli_query($con, $query) or trigger_error('Query is wrong!');
+
+        if (mysqli_affected_rows($con) == 1) {
+            header("Location: index.php?msg=Request send successfully!");
+            exit();
+        } else {
+            echo '<div class="alert alert-danger" role="alert">Something went wrong, try again.</div>';
         }
-    }else{
-        header("Location: index.php");
     }
+} else {
+    header("Location: index.php");
+}
 ?>
 
 <form action="sendRequest.php" method="post">
@@ -49,5 +50,5 @@
 </form>
 
 <?php
-    include ('includes/footer.php');
+include ('includes/footer.php');
 ?>

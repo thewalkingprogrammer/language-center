@@ -76,3 +76,23 @@ function validateAddUser() {
         return false;
     }
 }
+
+function validateAddLecture() {
+    var title = document.forms["frmAddLecture"]["title"].value;
+    var body = document.forms["frmAddLecture"]["body"].value;
+    
+    if (title == "" || body == "") {
+        alert("All fields must be set!");
+        return false;
+    }
+    
+    if(document.forms["frmAddLecture"]["title"].value.length > 50){
+        alert('Title cannot be greater than 50');
+        return false;
+    }
+    
+    if(document.forms["frmAddLecture"]["body"].value.length > 3000){
+        alert('Body cannot be greater than 3000');
+        return false;
+    }
+}

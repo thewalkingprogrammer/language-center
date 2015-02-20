@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($_POST['email'])) {
         if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
             $email = mysqli_real_escape_string($con, $_POST['email']);
-        }else{
+        } else {
             $email = false;
             echo '<div class="alert alert-danger" role="alert">Not right format for email</div>';
         }
@@ -42,7 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($fName && $lName && $email && $password) {
 
-        $query = "select userId from users where email='$email'";
+        $query = "select userId "
+                . "from users "
+                . "where email = '$email'";
         $result = mysqli_query($con, $query) or trigger_error('Query is wrong!');
 
         if (mysqli_num_rows($result) == 0) {
@@ -63,8 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         echo '<div class="alert alert-danger" role="alert">Try again!.</div>';
     }
-
-    mysqli_close($con);
 }
 ?>
 
@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="panel-heading">
                     <h3 class="panel-title">Registration Page</h3>
                 </div>
-                
+
                 <div class="panel-body">
                     <table>
                         <tr>
